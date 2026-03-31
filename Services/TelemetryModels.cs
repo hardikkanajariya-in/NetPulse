@@ -22,6 +22,8 @@ public sealed record TelemetrySnapshot(
 {
     public static TelemetrySnapshot Empty { get; } = new(0, 0, Array.Empty<AdapterTelemetry>());
 
+    public IReadOnlyList<ProcessNetworkInfo> Processes { get; init; } = Array.Empty<ProcessNetworkInfo>();
+
     public AdapterTelemetry? TopAdapter => Adapters
         .OrderByDescending(adapter => adapter.TotalSpeed)
         .FirstOrDefault();
@@ -46,4 +48,31 @@ public sealed class AdapterDailyUsageRecord
 
     public string Downloaded => SpeedFormatter.FormatSize(BytesDownloaded);
     public string Uploaded => SpeedFormatter.FormatSize(BytesUploaded);
+}
+
+public sealed class ProcessNetworkInfo
+{
+    public string ProcessName { get; set; } = string.Empty;
+    public string ProcessPath { get; set; } = string.Empty;
+    public int ConnectionCount { get; set; }
+}
+
+public sealed class AlertRule
+{
+    public string RuleId { get; set; } = string.Empty;
+    public string RuleName { get; set; } = string.Empty;
+    public string RuleType { get; set; } = string.Empty;
+    public long ThresholdBytes { get; set; }
+    public bool Enabled { get; set; } = true;
+}
+
+public sealed class AlertHistoryEntry
+{
+    public string RuleId { get; set; } = string.Empty;
+    public string TriggeredUtc { get; set; } = string.Empty;
+    public string Message { get; set; } = string.Empty;
+
+    public string TriggeredLocal => DateTime.TryParse(TriggeredUtc, out var dt)
+        ? dt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")
+        : TriggeredUtc;
 }

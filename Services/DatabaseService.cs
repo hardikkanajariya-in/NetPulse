@@ -67,8 +67,24 @@ public sealed class DatabaseService
                 setting_value TEXT NOT NULL
             );
 
+            CREATE TABLE IF NOT EXISTS alert_rules (
+                rule_id TEXT PRIMARY KEY,
+                rule_name TEXT NOT NULL,
+                rule_type TEXT NOT NULL,
+                threshold_bytes INTEGER NOT NULL,
+                enabled INTEGER NOT NULL DEFAULT 1
+            );
+
+            CREATE TABLE IF NOT EXISTS alert_history (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                rule_id TEXT NOT NULL,
+                triggered_utc TEXT NOT NULL,
+                message TEXT NOT NULL
+            );
+
             CREATE INDEX IF NOT EXISTS idx_adapter_daily_usage_date ON adapter_daily_usage(date DESC);
-            CREATE INDEX IF NOT EXISTS idx_adapters_last_seen ON adapters(last_seen_utc DESC);";
+            CREATE INDEX IF NOT EXISTS idx_adapters_last_seen ON adapters(last_seen_utc DESC);
+            CREATE INDEX IF NOT EXISTS idx_alert_history_time ON alert_history(triggered_utc DESC);";
         cmd.ExecuteNonQuery();
     }
 
@@ -382,6 +398,103 @@ public sealed class DatabaseService
         cmd.Parameters.AddWithValue("@key", key);
         cmd.Parameters.AddWithValue("@value", value);
         cmd.ExecuteNonQuery();
+    }
+
+    public List<AlertRule> GetAlertRules()
+    {
+        var rules = new List<AlertRule>();
+        using var conn = new SqliteConnection(ConnectionString);
+        conn.Open();
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = "SELECT rule_id, rule_name, rule_type, threshold_bytes, enabled FROM alert_rules";
+        using var reader = cmd.ExecuteReader();
+        while (reader.Read())
+        {
+            rules.Add(new AlertRule
+            {
+                RuleId = reader.GetString(0),
+                RuleName = reader.GetString(1),
+                RuleType = reader.GetString(2),
+                ThresholdBytes = reader.GetInt64(3),
+                Enabled = reader.GetInt32(4) == 1
+            });
+        }
+        return rules;
+    }
+
+    public void SaveAlertRule(AlertRule rule)
+    {
+        using var conn = new SqliteConnection(ConnectionString);
+        conn.Open();
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = @"
+            INSERT INTO alert_rules (rule_id, rule_name, rule_type, threshold_bytes, enabled)
+            VALUES (@id, @name, @type, @threshold, @enabled)
+            ON CONFLICT(rule_id) DO UPDATE SET
+                rule_name = excluded.rule_name,
+                rule_type = excluded.rule_type,
+                threshold_bytes = excluded.threshold_bytes,
+                enabled = excluded.enabled";
+        cmd.Parameters.AddWithValue("@id", rule.RuleId);
+        cmd.Parameters.AddWithValue("@name", rule.RuleName);
+        cmd.Parameters.AddWithValue("@type", rule.RuleType);
+        cmd.Parameters.AddWithValue("@threshold", rule.ThresholdBytes);
+        cmd.Parameters.AddWithValue("@enabled", rule.Enabled ? 1 : 0);
+        cmd.ExecuteNonQuery();
+    }
+
+    public void DeleteAlertRule(string ruleId)
+    {
+        using var conn = new SqliteConnection(ConnectionString);
+        conn.Open();
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = "DELETE FROM alert_rules WHERE rule_id = @id";
+        cmd.Parameters.AddWithValue("@id", ruleId);
+        cmd.ExecuteNonQuery();
+    }
+
+    public void AddAlertHistoryEntry(string ruleId, string message)
+    {
+        using var conn = new SqliteConnection(ConnectionString);
+        conn.Open();
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = @"
+            INSERT INTO alert_history (rule_id, triggered_utc, message)
+            VALUES (@ruleId, @utc, @msg)";
+        cmd.Parameters.AddWithValue("@ruleId", ruleId);
+        cmd.Parameters.AddWithValue("@utc", DateTime.UtcNow.ToString("O"));
+        cmd.Parameters.AddWithValue("@msg", message);
+        cmd.ExecuteNonQuery();
+
+        // Retain last 200 entries
+        using var pruneCmd = conn.CreateCommand();
+        pruneCmd.CommandText = @"
+            DELETE FROM alert_history WHERE id NOT IN 
+            (SELECT id FROM alert_history ORDER BY id DESC LIMIT 200)";
+        pruneCmd.ExecuteNonQuery();
+    }
+
+    public List<AlertHistoryEntry> GetAlertHistory(int limit = 50)
+    {
+        var entries = new List<AlertHistoryEntry>();
+        using var conn = new SqliteConnection(ConnectionString);
+        conn.Open();
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = @"
+            SELECT rule_id, triggered_utc, message FROM alert_history
+            ORDER BY id DESC LIMIT @limit";
+        cmd.Parameters.AddWithValue("@limit", limit);
+        using var reader = cmd.ExecuteReader();
+        while (reader.Read())
+        {
+            entries.Add(new AlertHistoryEntry
+            {
+                RuleId = reader.GetString(0),
+                TriggeredUtc = reader.GetString(1),
+                Message = reader.GetString(2)
+            });
+        }
+        return entries;
     }
 
     private sealed class PendingAdapterUsage

@@ -3,5 +3,195 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              ShutdownMode="OnExplicitShutdown">
     <Application.Resources>
+        <ResourceDictionary>
+            <!-- ═══ Dark Theme Palette ═══ -->
+            <SolidColorBrush x:Key="BgPrimary" Color="#0D1117"/>
+            <SolidColorBrush x:Key="BgSecondary" Color="#161B22"/>
+            <SolidColorBrush x:Key="BgTertiary" Color="#1C2128"/>
+            <SolidColorBrush x:Key="BgHover" Color="#292E36"/>
+            <SolidColorBrush x:Key="BorderDefault" Color="#30363D"/>
+            <SolidColorBrush x:Key="BorderMuted" Color="#21262D"/>
+            <SolidColorBrush x:Key="TextPrimary" Color="#E6EDF3"/>
+            <SolidColorBrush x:Key="TextSecondary" Color="#8B949E"/>
+            <SolidColorBrush x:Key="TextMuted" Color="#484F58"/>
+            <SolidColorBrush x:Key="AccentGreen" Color="#3FB950"/>
+            <SolidColorBrush x:Key="AccentBlue" Color="#58A6FF"/>
+            <SolidColorBrush x:Key="AccentOrange" Color="#D29922"/>
+            <SolidColorBrush x:Key="AccentRed" Color="#F85149"/>
+            <SolidColorBrush x:Key="AccentPurple" Color="#BC8CFF"/>
+
+            <!-- System Color Overrides (auto-themes built-in controls) -->
+            <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#0D1117"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.WindowTextBrushKey}" Color="#E6EDF3"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#161B22"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="#E6EDF3"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlDarkBrushKey}" Color="#30363D"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.GrayTextBrushKey}" Color="#8B949E"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#1F6FEB"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#FFFFFF"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#292E36"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#E6EDF3"/>
+
+            <!-- ═══ Card ═══ -->
+            <Style x:Key="Card" TargetType="Border">
+                <Setter Property="Background" Value="{StaticResource BgSecondary}"/>
+                <Setter Property="CornerRadius" Value="8"/>
+                <Setter Property="Padding" Value="16"/>
+                <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+            </Style>
+
+            <!-- ═══ Sidebar Nav Radio ═══ -->
+            <Style x:Key="NavRadio" TargetType="RadioButton">
+                <Setter Property="Foreground" Value="{StaticResource TextSecondary}"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Border x:Name="Bd" Background="Transparent"
+                                    BorderThickness="3,0,0,0" BorderBrush="Transparent"
+                                    Padding="16,10">
+                                <ContentPresenter VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="{StaticResource BgTertiary}"/>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="{StaticResource BgTertiary}"/>
+                                    <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource AccentBlue}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- ═══ Filter Pill Radio ═══ -->
+            <Style x:Key="FilterRadio" TargetType="RadioButton">
+                <Setter Property="Foreground" Value="{StaticResource TextSecondary}"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Margin" Value="0,0,6,0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Border x:Name="Bd" Background="{StaticResource BgSecondary}"
+                                    BorderBrush="{StaticResource BorderDefault}" BorderThickness="1"
+                                    CornerRadius="4" Padding="12,6">
+                                <ContentPresenter HorizontalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="{StaticResource BgHover}"/>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="#1F6FEB"/>
+                                    <Setter TargetName="Bd" Property="BorderBrush" Value="#388BFD"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- ═══ Modern Button ═══ -->
+            <Style x:Key="ModernButton" TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource BgTertiary}"/>
+                <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Padding" Value="16,8"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="{StaticResource BgHover}"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="AccentButton" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+                <Setter Property="Background" Value="#1F6FEB"/>
+                <Setter Property="BorderBrush" Value="#388BFD"/>
+            </Style>
+
+            <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+                <Setter Property="Background" Value="#6E2B2B"/>
+                <Setter Property="BorderBrush" Value="#F85149"/>
+                <Setter Property="Foreground" Value="#F85149"/>
+            </Style>
+
+            <!-- ═══ Dark ListView Item ═══ -->
+            <Style x:Key="DarkListViewItem" TargetType="ListViewItem">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                <Setter Property="BorderBrush" Value="{StaticResource BorderMuted}"/>
+                <Setter Property="Padding" Value="0,6"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListViewItem">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Padding="{TemplateBinding Padding}">
+                                <GridViewRowPresenter VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource BgTertiary}"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource BgHover}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- ═══ Dark Column Header ═══ -->
+            <Style x:Key="DarkColumnHeader" TargetType="GridViewColumnHeader">
+                <Setter Property="Foreground" Value="{StaticResource TextSecondary}"/>
+                <Setter Property="FontSize" Value="11"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="GridViewColumnHeader">
+                            <Border Background="{StaticResource BgTertiary}"
+                                    BorderBrush="{StaticResource BorderDefault}"
+                                    BorderThickness="0,0,1,1" Padding="10,8">
+                                <TextBlock Text="{TemplateBinding Content}"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           FontSize="{TemplateBinding FontSize}"
+                                           FontWeight="{TemplateBinding FontWeight}"
+                                           TextTrimming="CharacterEllipsis"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

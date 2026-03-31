@@ -17,6 +17,8 @@ public partial class App : Application
     private DatabaseService _databaseService = null!;
     private SettingsService _settingsService = null!;
     private StartupManager _startupManager = null!;
+    private ProcessTracker _processTracker = null!;
+    private AlertService _alertService = null!;
     private TelemetryCoordinator _telemetryCoordinator = null!;
     private DispatcherTimer _timer = null!;
     private MainWindow? _dashboard;
@@ -39,8 +41,17 @@ public partial class App : Application
         _settingsService = new SettingsService(_databaseService);
         _networkMonitor = new NetworkMonitor();
         _startupManager = new StartupManager();
-        _telemetryCoordinator = new TelemetryCoordinator(_networkMonitor, _databaseService);
+        _processTracker = new ProcessTracker();
+        _alertService = new AlertService(_databaseService);
+        _telemetryCoordinator = new TelemetryCoordinator(
+            _networkMonitor, _databaseService, _processTracker, _alertService);
         _startupManager.EnsureDefaultEnabled();
+
+        _alertService.AlertTriggered += (title, message) =>
+        {
+            Dispatcher.Invoke(() =>
+                _trayIcon.ShowBalloonTip(5000, title, message, Forms.ToolTipIcon.Warning));
+        };
 
         CreateTrayIcon();
         CreateMeterWindow();
@@ -122,7 +133,7 @@ public partial class App : Application
     {
         if (_dashboard == null || !_dashboard.IsLoaded)
         {
-            _dashboard = new MainWindow(_databaseService, _settingsService);
+            _dashboard = new MainWindow(_databaseService, _settingsService, _startupManager, _alertService);
             MainWindow = _dashboard;
         }
 
