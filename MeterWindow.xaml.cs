@@ -16,8 +16,9 @@ public partial class MeterWindow : Window
     {
         InitializeComponent();
         Loaded += (_, _) => PositionBottomRight();
-        SourceInitialized += (_, _) => PositionBottomRight();
+        SourceInitialized += (_, _) => InitializeDesktopWidget();
         LocationChanged += (_, _) => KeepInsideWorkArea();
+        Deactivated += (_, _) => DesktopWidgetHost.SendToDesktop(this);
     }
 
     public void UpdateSpeeds(long downloadSpeed, long uploadSpeed)
@@ -37,6 +38,7 @@ public partial class MeterWindow : Window
         if (e.ButtonState == MouseButtonState.Pressed)
         {
             DragMove();
+            DesktopWidgetHost.SendToDesktop(this);
         }
     }
 
@@ -57,6 +59,12 @@ public partial class MeterWindow : Window
         Rect workArea = SystemParameters.WorkArea;
         Left = workArea.Right - Width - 16;
         Top = workArea.Bottom - Height - 16;
+    }
+
+    private void InitializeDesktopWidget()
+    {
+        PositionBottomRight();
+        DesktopWidgetHost.Attach(this);
     }
 
     private void KeepInsideWorkArea()
