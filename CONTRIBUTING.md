@@ -60,8 +60,8 @@ chore: update NuGet packages
 
 ## Reporting Issues
 
-- Use the [Bug Report](https://github.com/hardikkanajariya/net-pulse/issues/new?template=bug_report.yml) template for bugs
-- Use the [Feature Request](https://github.com/hardikkanajariya/net-pulse/issues/new?template=feature_request.yml) template for ideas
+- Use the [Bug Report](https://github.com/hardikkanajariya-in/NetPulse/issues/new?template=bug_report.yml) template for bugs
+- Use the [Feature Request](https://github.com/hardikkanajariya-in/NetPulse/issues/new?template=feature_request.yml) template for ideas
 - Search existing issues before creating a new one
 - For large changes, open an issue first to discuss the approach
 

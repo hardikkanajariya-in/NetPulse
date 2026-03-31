@@ -2,10 +2,10 @@
 
 **A feature-rich, real-time network speed monitor and usage tracker for Windows**
 
-[![Build](https://github.com/hardikkanajariya/net-pulse/actions/workflows/build.yml/badge.svg)](https://github.com/hardikkanajariya/net-pulse/actions/workflows/build.yml)
+[![Build](https://github.com/hardikkanajariya-in/NetPulse/actions/workflows/build.yml/badge.svg)](https://github.com/hardikkanajariya-in/NetPulse/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/download/dotnet/8.0)
-[![Release](https://img.shields.io/github/v/release/hardikkanajariya/net-pulse?include_prereleases)](https://github.com/hardikkanajariya/net-pulse/releases)
+[![Release](https://img.shields.io/github/v/release/hardikkanajariya-in/NetPulse?include_prereleases)](https://github.com/hardikkanajariya-in/NetPulse/releases)
 
 ---
 
@@ -80,15 +80,15 @@ NetPulse is a native Windows desktop application that monitors real-time network
 
 ### Download
 
-Download the latest release from the [Releases](https://github.com/hardikkanajariya/net-pulse/releases) page.
+Download the latest release from the [Releases](https://github.com/hardikkanajariya-in/NetPulse/releases) page.
 
 ### Build from Source
 
 **Prerequisites:** [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 
 ```bash
-git clone https://github.com/hardikkanajariya/net-pulse.git
-cd net-pulse
+git clone https://github.com/hardikkanajariya-in/NetPulse.git
+cd NetPulse
 dotnet restore
 dotnet build
 dotnet run
