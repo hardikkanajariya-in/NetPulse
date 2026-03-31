@@ -2,8 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="NetPulse Meter"
-        Width="220"
-        Height="84"
+    Width="250"
+    Height="96"
         WindowStyle="None"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
@@ -29,7 +29,8 @@
                            FontSize="14"
                            FontWeight="SemiBold" />
                 <TextBlock DockPanel.Dock="Right"
-                           Text="Desktop widget"
+                           x:Name="SourceText"
+                           Text="Total traffic"
                            Foreground="#7F8C9A"
                            FontSize="11"
                            VerticalAlignment="Center" />

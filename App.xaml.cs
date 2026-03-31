@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
@@ -14,12 +15,13 @@ public partial class App : Application
     private Icon _trayAppIcon = null!;
     private NetworkMonitor _networkMonitor = null!;
     private DatabaseService _databaseService = null!;
+    private SettingsService _settingsService = null!;
     private StartupManager _startupManager = null!;
+    private TelemetryCoordinator _telemetryCoordinator = null!;
     private DispatcherTimer _timer = null!;
     private MainWindow? _dashboard;
     private MeterWindow? _meterWindow;
     private Mutex? _mutex;
-    private DateTime _lastDbFlush = DateTime.UtcNow;
     private Forms.ToolStripMenuItem _startWithWindowsItem = null!;
 
     protected override void OnStartup(StartupEventArgs e)
@@ -34,8 +36,10 @@ public partial class App : Application
         base.OnStartup(e);
 
         _databaseService = new DatabaseService();
+        _settingsService = new SettingsService(_databaseService);
         _networkMonitor = new NetworkMonitor();
         _startupManager = new StartupManager();
+        _telemetryCoordinator = new TelemetryCoordinator(_networkMonitor, _databaseService);
         _startupManager.EnsureDefaultEnabled();
 
         CreateTrayIcon();
@@ -44,12 +48,14 @@ public partial class App : Application
         _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
         _timer.Tick += Timer_Tick;
         _timer.Start();
+        Timer_Tick(this, EventArgs.Empty);
     }
 
     private void CreateMeterWindow()
     {
         _meterWindow = new MeterWindow();
         _meterWindow.DashboardRequested += (_, _) => ShowDashboard();
+        _meterWindow.UpdateTelemetry(_telemetryCoordinator.CurrentSnapshot, _settingsService);
         _meterWindow.Show();
     }
 
@@ -97,34 +103,31 @@ public partial class App : Application
 
     private void Timer_Tick(object? sender, EventArgs e)
     {
-        _networkMonitor.Update();
+        TelemetrySnapshot snapshot = _telemetryCoordinator.Tick();
+        string down = SpeedFormatter.Format(snapshot.DownloadSpeed);
+        string up = SpeedFormatter.Format(snapshot.UploadSpeed);
 
-        string down = SpeedFormatter.Format(_networkMonitor.DownloadSpeed);
-        string up = SpeedFormatter.Format(_networkMonitor.UploadSpeed);
+        string tooltip = snapshot.TopAdapter is null
+            ? $"NetPulse ↓ {down} ↑ {up}"
+            : $"{snapshot.TopAdapter.Name} ↓ {down} ↑ {up}";
 
-        string tooltip = $"↓ {down}  ↑ {up}";
         // NotifyIcon.Text max is 127 chars
         _trayIcon.Text = tooltip.Length > 127 ? tooltip[..127] : tooltip;
 
-        _databaseService.AccumulateBytes(_networkMonitor.DownloadSpeed, _networkMonitor.UploadSpeed);
-
-        if ((DateTime.UtcNow - _lastDbFlush).TotalSeconds >= 60)
-        {
-            _databaseService.FlushToDatabase();
-            _lastDbFlush = DateTime.UtcNow;
-        }
-
-        _dashboard?.UpdateSpeeds(_networkMonitor.DownloadSpeed, _networkMonitor.UploadSpeed);
-        _meterWindow?.UpdateSpeeds(_networkMonitor.DownloadSpeed, _networkMonitor.UploadSpeed);
+        _dashboard?.UpdateTelemetry(snapshot);
+        _meterWindow?.UpdateTelemetry(snapshot, _settingsService);
     }
 
     private void ShowDashboard()
     {
         if (_dashboard == null || !_dashboard.IsLoaded)
         {
-            _dashboard = new MainWindow(_databaseService, _networkMonitor);
+            _dashboard = new MainWindow(_databaseService, _settingsService);
             MainWindow = _dashboard;
         }
+
+        _dashboard.UpdateTelemetry(_telemetryCoordinator.CurrentSnapshot);
+        _dashboard.RefreshAll();
 
         _dashboard.Show();
         if (_dashboard.WindowState == WindowState.Minimized)
@@ -150,14 +153,14 @@ public partial class App : Application
         if (result == MessageBoxResult.Yes)
         {
             _databaseService.ClearAllRecords();
-            _dashboard?.RefreshHistory();
+            _dashboard?.RefreshAll();
         }
     }
 
     private void ExitApp()
     {
         _timer?.Stop();
-        _databaseService?.FlushToDatabase();
+        _telemetryCoordinator?.FlushPending();
         if (_dashboard != null)
         {
             _dashboard.AllowClose = true;
@@ -177,7 +180,7 @@ public partial class App : Application
     protected override void OnExit(ExitEventArgs e)
     {
         _timer?.Stop();
-        _databaseService?.FlushToDatabase();
+        _telemetryCoordinator?.FlushPending();
         if (_trayIcon != null)
         {
             _trayIcon.Visible = false;

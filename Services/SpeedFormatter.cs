@@ -8,12 +8,22 @@ public static class SpeedFormatter
 
     public static string Format(long bytesPerSecond)
     {
-        return bytesPerSecond switch
+        return FormatValue(bytesPerSecond, "/s");
+    }
+
+    public static string FormatSize(long bytes)
+    {
+        return FormatValue(bytes, string.Empty);
+    }
+
+    private static string FormatValue(long bytes, string suffix)
+    {
+        return bytes switch
         {
-            >= GB => $"{bytesPerSecond / (double)GB:F2} GB/s",
-            >= MB => $"{bytesPerSecond / (double)MB:F2} MB/s",
-            >= KB => $"{bytesPerSecond / (double)KB:F2} KB/s",
-            _ => $"{bytesPerSecond} B/s"
+            >= GB => $"{bytes / (double)GB:F2} GB{suffix}",
+            >= MB => $"{bytes / (double)MB:F2} MB{suffix}",
+            >= KB => $"{bytes / (double)KB:F2} KB{suffix}",
+            _ => $"{bytes} B{suffix}"
         };
     }
 }

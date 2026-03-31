@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using SpeedoMeter.Services;
@@ -21,8 +22,33 @@ public partial class MeterWindow : Window
         Deactivated += (_, _) => DesktopWidgetHost.SendToDesktop(this);
     }
 
-    public void UpdateSpeeds(long downloadSpeed, long uploadSpeed)
+    public void UpdateTelemetry(TelemetrySnapshot snapshot, SettingsService settingsService)
     {
+        string sourceLabel = "Total traffic";
+        long downloadSpeed = snapshot.DownloadSpeed;
+        long uploadSpeed = snapshot.UploadSpeed;
+
+        switch (settingsService.WidgetMode)
+        {
+            case SettingsService.WidgetModeTopAdapter:
+            {
+                var topAdapter = snapshot.TopAdapter;
+                sourceLabel = topAdapter?.Name ?? "No active adapter";
+                downloadSpeed = topAdapter?.DownloadSpeed ?? 0;
+                uploadSpeed = topAdapter?.UploadSpeed ?? 0;
+                break;
+            }
+            case SettingsService.WidgetModeSelectedAdapter:
+            {
+                var selectedAdapter = snapshot.Adapters.FirstOrDefault(adapter => adapter.Id == settingsService.SelectedAdapterId);
+                sourceLabel = selectedAdapter?.Name ?? "Selected adapter";
+                downloadSpeed = selectedAdapter?.DownloadSpeed ?? 0;
+                uploadSpeed = selectedAdapter?.UploadSpeed ?? 0;
+                break;
+            }
+        }
+
+        SourceText.Text = sourceLabel;
         DownloadSpeedText.Text = SpeedFormatter.Format(downloadSpeed);
         UploadSpeedText.Text = SpeedFormatter.Format(uploadSpeed);
     }
