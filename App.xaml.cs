@@ -17,6 +17,7 @@ public partial class App : Application
     private StartupManager _startupManager = null!;
     private DispatcherTimer _timer = null!;
     private MainWindow? _dashboard;
+    private MeterWindow? _meterWindow;
     private Mutex? _mutex;
     private DateTime _lastDbFlush = DateTime.UtcNow;
     private Forms.ToolStripMenuItem _startWithWindowsItem = null!;
@@ -35,13 +36,21 @@ public partial class App : Application
         _databaseService = new DatabaseService();
         _networkMonitor = new NetworkMonitor();
         _startupManager = new StartupManager();
-    _startupManager.EnsureDefaultEnabled();
+        _startupManager.EnsureDefaultEnabled();
 
         CreateTrayIcon();
+        CreateMeterWindow();
 
         _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
         _timer.Tick += Timer_Tick;
         _timer.Start();
+    }
+
+    private void CreateMeterWindow()
+    {
+        _meterWindow = new MeterWindow();
+        _meterWindow.DashboardRequested += (_, _) => ShowDashboard();
+        _meterWindow.Show();
     }
 
     private void CreateTrayIcon()
@@ -106,6 +115,7 @@ public partial class App : Application
         }
 
         _dashboard?.UpdateSpeeds(_networkMonitor.DownloadSpeed, _networkMonitor.UploadSpeed);
+        _meterWindow?.UpdateSpeeds(_networkMonitor.DownloadSpeed, _networkMonitor.UploadSpeed);
     }
 
     private void ShowDashboard()
@@ -151,6 +161,12 @@ public partial class App : Application
         if (_dashboard != null)
         {
             _dashboard.AllowClose = true;
+            _dashboard.Close();
+        }
+        if (_meterWindow != null)
+        {
+            _meterWindow.AllowClose = true;
+            _meterWindow.Close();
         }
         _trayIcon.Visible = false;
         _trayIcon?.Dispose();
