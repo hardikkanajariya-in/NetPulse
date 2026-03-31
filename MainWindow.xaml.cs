@@ -10,6 +10,8 @@ public partial class MainWindow : Window
     private readonly DatabaseService _databaseService;
     private readonly NetworkMonitor _networkMonitor;
 
+    public bool AllowClose { get; set; }
+
     public MainWindow(DatabaseService databaseService, NetworkMonitor networkMonitor)
     {
         InitializeComponent();
@@ -46,6 +48,12 @@ public partial class MainWindow : Window
 
     protected override void OnClosing(CancelEventArgs e)
     {
+        if (AllowClose)
+        {
+            base.OnClosing(e);
+            return;
+        }
+
         e.Cancel = true;
         Hide();
     }

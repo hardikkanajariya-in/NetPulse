@@ -1,11 +1,15 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
 
 namespace SpeedoMeter.Services;
 
 public static class IconGenerator
 {
+    [DllImport("user32.dll", SetLastError = true)]
+    private static extern bool DestroyIcon(IntPtr hIcon);
+
     public static Icon CreateTrayIcon()
     {
         using var bitmap = new Bitmap(32, 32);
@@ -43,6 +47,9 @@ public static class IconGenerator
         g.FillEllipse(brush, 14, 16, 4, 4);
 
         IntPtr hIcon = bitmap.GetHicon();
-        return Icon.FromHandle(hIcon);
+        using var icon = Icon.FromHandle(hIcon);
+        var stableIcon = (Icon)icon.Clone();
+        DestroyIcon(hIcon);
+        return stableIcon;
     }
 }

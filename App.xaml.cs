@@ -11,6 +11,7 @@ namespace SpeedoMeter;
 public partial class App : Application
 {
     private Forms.NotifyIcon _trayIcon = null!;
+    private Icon _trayAppIcon = null!;
     private NetworkMonitor _networkMonitor = null!;
     private DatabaseService _databaseService = null!;
     private StartupManager _startupManager = null!;
@@ -34,6 +35,7 @@ public partial class App : Application
         _databaseService = new DatabaseService();
         _networkMonitor = new NetworkMonitor();
         _startupManager = new StartupManager();
+    _startupManager.EnsureDefaultEnabled();
 
         CreateTrayIcon();
 
@@ -51,22 +53,27 @@ public partial class App : Application
         };
         _startWithWindowsItem.CheckedChanged += (_, _) =>
         {
-            if (_startWithWindowsItem.Checked)
-                _startupManager.Enable();
-            else
-                _startupManager.Disable();
+            Dispatcher.Invoke(() =>
+            {
+                if (_startWithWindowsItem.Checked)
+                    _startupManager.Enable();
+                else
+                    _startupManager.Disable();
+            });
         };
 
         var contextMenu = new Forms.ContextMenuStrip();
-        contextMenu.Items.Add("Open Dashboard", null, (_, _) => ShowDashboard());
+        contextMenu.Items.Add("Open Dashboard", null, (_, _) => Dispatcher.Invoke(ShowDashboard));
         contextMenu.Items.Add(_startWithWindowsItem);
-        contextMenu.Items.Add("Clear All Records", null, (_, _) => ClearRecords());
+        contextMenu.Items.Add("Clear All Records", null, (_, _) => Dispatcher.Invoke(ClearRecords));
         contextMenu.Items.Add(new Forms.ToolStripSeparator());
-        contextMenu.Items.Add("Exit", null, (_, _) => ExitApp());
+        contextMenu.Items.Add("Exit", null, (_, _) => Dispatcher.Invoke(ExitApp));
+
+        _trayAppIcon = IconGenerator.CreateTrayIcon();
 
         _trayIcon = new Forms.NotifyIcon
         {
-            Icon = IconGenerator.CreateTrayIcon(),
+            Icon = _trayAppIcon,
             Text = "NetPulse",
             Visible = true,
             ContextMenuStrip = contextMenu
@@ -74,8 +81,9 @@ public partial class App : Application
         _trayIcon.MouseClick += (_, e) =>
         {
             if (e.Button == Forms.MouseButtons.Left)
-                ShowDashboard();
+                Dispatcher.Invoke(ShowDashboard);
         };
+        _trayIcon.DoubleClick += (_, _) => Dispatcher.Invoke(ShowDashboard);
     }
 
     private void Timer_Tick(object? sender, EventArgs e)
@@ -105,11 +113,20 @@ public partial class App : Application
         if (_dashboard == null || !_dashboard.IsLoaded)
         {
             _dashboard = new MainWindow(_databaseService, _networkMonitor);
+            MainWindow = _dashboard;
         }
+
         _dashboard.Show();
-        _dashboard.Activate();
         if (_dashboard.WindowState == WindowState.Minimized)
+        {
             _dashboard.WindowState = WindowState.Normal;
+        }
+
+        _dashboard.ShowInTaskbar = true;
+        _dashboard.Topmost = true;
+        _dashboard.Activate();
+        _dashboard.Topmost = false;
+        _dashboard.Focus();
     }
 
     private void ClearRecords()
@@ -131,8 +148,13 @@ public partial class App : Application
     {
         _timer?.Stop();
         _databaseService?.FlushToDatabase();
+        if (_dashboard != null)
+        {
+            _dashboard.AllowClose = true;
+        }
         _trayIcon.Visible = false;
         _trayIcon?.Dispose();
+        _trayAppIcon?.Dispose();
         Shutdown();
     }
 
@@ -145,6 +167,7 @@ public partial class App : Application
             _trayIcon.Visible = false;
             _trayIcon.Dispose();
         }
+        _trayAppIcon?.Dispose();
         _mutex?.ReleaseMutex();
         _mutex?.Dispose();
         base.OnExit(e);
