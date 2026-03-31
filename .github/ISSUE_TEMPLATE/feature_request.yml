@@ -1,0 +1,33 @@
+name: Feature request
+description: Suggest an improvement or new feature for NetPulse
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the suggestion. Please describe the problem and the outcome you want.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      placeholder: What problem are you trying to solve?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      placeholder: Describe the feature or behavior you want.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      placeholder: Any workaround or alternative approach you've considered.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      placeholder: Mockups, examples, screenshots, or references.
