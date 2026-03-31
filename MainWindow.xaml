@@ -2,10 +2,11 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="NetPulse"
+        Icon="app.ico"
         Width="940" Height="700"
         MinWidth="740" MinHeight="520"
         WindowStartupLocation="CenterScreen"
-        Background="{StaticResource BgPrimary}">
+        Background="{DynamicResource BgPrimary}">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -14,48 +15,48 @@
         </Grid.ColumnDefinitions>
 
         <!-- ═══ SIDEBAR ═══ -->
-        <Border Grid.Column="0" Background="{StaticResource BgPrimary}"
-                BorderBrush="{StaticResource BorderDefault}" BorderThickness="0,0,1,0">
+        <Border Grid.Column="0" Background="{DynamicResource BgPrimary}"
+                BorderBrush="{DynamicResource BorderDefault}" BorderThickness="0,0,1,0">
             <DockPanel>
                 <StackPanel DockPanel.Dock="Top" Margin="20,20,20,12">
                     <TextBlock Text="NETPULSE" FontSize="16" FontWeight="Bold"
-                               Foreground="{StaticResource AccentBlue}"/>
+                               Foreground="{DynamicResource AccentBlue}"/>
                     <TextBlock Text="Network Monitor" FontSize="11"
-                               Foreground="{StaticResource TextMuted}" Margin="0,4,0,0"/>
+                               Foreground="{DynamicResource TextMuted}" Margin="0,4,0,0"/>
                 </StackPanel>
-                <Border DockPanel.Dock="Top" Height="1" Background="{StaticResource BorderMuted}" Margin="16,0,16,8"/>
+                <Border DockPanel.Dock="Top" Height="1" Background="{DynamicResource BorderMuted}" Margin="16,0,16,8"/>
 
-                <Border DockPanel.Dock="Bottom" Height="1" Background="{StaticResource BorderMuted}" Margin="16,8,16,0"/>
+                <Border DockPanel.Dock="Bottom" Height="1" Background="{DynamicResource BorderMuted}" Margin="16,8,16,0"/>
                 <RadioButton DockPanel.Dock="Bottom" Content="⚙  Settings" Tag="Settings"
-                             GroupName="Nav" Style="{StaticResource NavRadio}" Checked="Nav_Checked" Margin="0,0,0,12"/>
+                             GroupName="Nav" Style="{DynamicResource NavRadio}" Checked="Nav_Checked" Margin="0,0,0,12"/>
 
                 <StackPanel>
                     <RadioButton Content="◈  Overview" Tag="Overview" GroupName="Nav" IsChecked="True"
-                                 Style="{StaticResource NavRadio}" Checked="Nav_Checked"/>
+                                 Style="{DynamicResource NavRadio}" Checked="Nav_Checked"/>
                     <RadioButton Content="◉  Live" Tag="Live" GroupName="Nav"
-                                 Style="{StaticResource NavRadio}" Checked="Nav_Checked"/>
+                                 Style="{DynamicResource NavRadio}" Checked="Nav_Checked"/>
                     <RadioButton Content="⇌  Adapters" Tag="Adapters" GroupName="Nav"
-                                 Style="{StaticResource NavRadio}" Checked="Nav_Checked"/>
+                                 Style="{DynamicResource NavRadio}" Checked="Nav_Checked"/>
                     <RadioButton Content="◫  Applications" Tag="Applications" GroupName="Nav"
-                                 Style="{StaticResource NavRadio}" Checked="Nav_Checked"/>
+                                 Style="{DynamicResource NavRadio}" Checked="Nav_Checked"/>
                     <RadioButton Content="▤  History" Tag="History" GroupName="Nav"
-                                 Style="{StaticResource NavRadio}" Checked="Nav_Checked"/>
+                                 Style="{DynamicResource NavRadio}" Checked="Nav_Checked"/>
                     <RadioButton Content="△  Alerts" Tag="Alerts" GroupName="Nav"
-                                 Style="{StaticResource NavRadio}" Checked="Nav_Checked"/>
+                                 Style="{DynamicResource NavRadio}" Checked="Nav_Checked"/>
                 </StackPanel>
             </DockPanel>
         </Border>
 
         <!-- ═══ CONTENT ═══ -->
-        <Grid Grid.Column="1" Background="{StaticResource BgPrimary}">
+        <Grid Grid.Column="1" Background="{DynamicResource BgPrimary}">
 
             <!-- ── OVERVIEW ── -->
             <ScrollViewer x:Name="OverviewPage" VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="24">
                     <TextBlock Text="Overview" FontSize="20" FontWeight="SemiBold"
-                               Foreground="{StaticResource TextPrimary}" Margin="0,0,0,4"/>
+                               Foreground="{DynamicResource TextPrimary}" Margin="0,0,0,4"/>
                     <TextBlock Text="Real-time network activity at a glance"
-                               Foreground="{StaticResource TextSecondary}" Margin="0,0,0,20"/>
+                               Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,20"/>
 
                     <Grid Margin="0,0,0,16">
                         <Grid.ColumnDefinitions>
@@ -64,56 +65,56 @@
                             <ColumnDefinition Width="*"/><ColumnDefinition Width="8"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0" Style="{StaticResource Card}">
+                        <Border Grid.Column="0" Style="{DynamicResource Card}">
                             <StackPanel>
                                 <TextBlock Text="↓ DOWNLOAD" FontSize="10" FontWeight="Bold"
-                                           Foreground="{StaticResource TextSecondary}" Margin="0,0,0,8"/>
+                                           Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,8"/>
                                 <TextBlock x:Name="DownloadSpeedText" Text="0 B/s" FontSize="22"
-                                           FontWeight="Bold" Foreground="{StaticResource AccentGreen}"/>
+                                           FontWeight="Bold" Foreground="{DynamicResource AccentGreen}"/>
                             </StackPanel>
                         </Border>
-                        <Border Grid.Column="2" Style="{StaticResource Card}">
+                        <Border Grid.Column="2" Style="{DynamicResource Card}">
                             <StackPanel>
                                 <TextBlock Text="↑ UPLOAD" FontSize="10" FontWeight="Bold"
-                                           Foreground="{StaticResource TextSecondary}" Margin="0,0,0,8"/>
+                                           Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,8"/>
                                 <TextBlock x:Name="UploadSpeedText" Text="0 B/s" FontSize="22"
-                                           FontWeight="Bold" Foreground="{StaticResource AccentBlue}"/>
+                                           FontWeight="Bold" Foreground="{DynamicResource AccentBlue}"/>
                             </StackPanel>
                         </Border>
-                        <Border Grid.Column="4" Style="{StaticResource Card}">
+                        <Border Grid.Column="4" Style="{DynamicResource Card}">
                             <StackPanel>
                                 <TextBlock Text="↓ TODAY" FontSize="10" FontWeight="Bold"
-                                           Foreground="{StaticResource TextSecondary}" Margin="0,0,0,8"/>
+                                           Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,8"/>
                                 <TextBlock x:Name="TodayDownloadText" Text="0 B" FontSize="18"
-                                           FontWeight="SemiBold" Foreground="{StaticResource AccentGreen}"/>
+                                           FontWeight="SemiBold" Foreground="{DynamicResource AccentGreen}"/>
                             </StackPanel>
                         </Border>
-                        <Border Grid.Column="6" Style="{StaticResource Card}">
+                        <Border Grid.Column="6" Style="{DynamicResource Card}">
                             <StackPanel>
                                 <TextBlock Text="↑ TODAY" FontSize="10" FontWeight="Bold"
-                                           Foreground="{StaticResource TextSecondary}" Margin="0,0,0,8"/>
+                                           Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,8"/>
                                 <TextBlock x:Name="TodayUploadText" Text="0 B" FontSize="18"
-                                           FontWeight="SemiBold" Foreground="{StaticResource AccentBlue}"/>
+                                           FontWeight="SemiBold" Foreground="{DynamicResource AccentBlue}"/>
                             </StackPanel>
                         </Border>
                     </Grid>
 
-                    <Border Style="{StaticResource Card}" Margin="0,0,0,16">
+                    <Border Style="{DynamicResource Card}" Margin="0,0,0,16">
                         <StackPanel>
                             <TextBlock Text="SPEED (60s)" FontSize="10" FontWeight="Bold"
-                                       Foreground="{StaticResource TextSecondary}" Margin="0,0,0,8"/>
+                                       Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,8"/>
                             <Canvas x:Name="MiniChartCanvas" Height="120" ClipToBounds="True"
                                     Background="Transparent" SizeChanged="ChartCanvas_SizeChanged">
-                                <Polygon x:Name="MiniDownloadFill" Fill="#1A3FB950" Stroke="Transparent"/>
-                                <Polygon x:Name="MiniUploadFill" Fill="#1A58A6FF" Stroke="Transparent"/>
-                                <Polyline x:Name="MiniDownloadLine" Stroke="{StaticResource AccentGreen}" StrokeThickness="1.5"/>
-                                <Polyline x:Name="MiniUploadLine" Stroke="{StaticResource AccentBlue}" StrokeThickness="1.5"/>
+                                <Polygon x:Name="MiniDownloadFill" Fill="{DynamicResource ChartDownloadFill}" Stroke="Transparent"/>
+                                <Polygon x:Name="MiniUploadFill" Fill="{DynamicResource ChartUploadFill}" Stroke="Transparent"/>
+                                <Polyline x:Name="MiniDownloadLine" Stroke="{DynamicResource AccentGreen}" StrokeThickness="1.5"/>
+                                <Polyline x:Name="MiniUploadLine" Stroke="{DynamicResource AccentBlue}" StrokeThickness="1.5"/>
                             </Canvas>
                             <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                                <Border Width="14" Height="3" Background="{StaticResource AccentGreen}" CornerRadius="1" VerticalAlignment="Center"/>
-                                <TextBlock Text=" Download" FontSize="11" Foreground="{StaticResource TextMuted}" Margin="0,0,16,0"/>
-                                <Border Width="14" Height="3" Background="{StaticResource AccentBlue}" CornerRadius="1" VerticalAlignment="Center"/>
-                                <TextBlock Text=" Upload" FontSize="11" Foreground="{StaticResource TextMuted}"/>
+                                <Border Width="14" Height="3" Background="{DynamicResource AccentGreen}" CornerRadius="1" VerticalAlignment="Center"/>
+                                <TextBlock Text=" Download" FontSize="11" Foreground="{DynamicResource TextMuted}" Margin="0,0,16,0"/>
+                                <Border Width="14" Height="3" Background="{DynamicResource AccentBlue}" CornerRadius="1" VerticalAlignment="Center"/>
+                                <TextBlock Text=" Upload" FontSize="11" Foreground="{DynamicResource TextMuted}"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>
@@ -122,24 +123,24 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/><ColumnDefinition Width="8"/><ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0" Style="{StaticResource Card}">
+                        <Border Grid.Column="0" Style="{DynamicResource Card}">
                             <StackPanel>
                                 <TextBlock Text="ACTIVE ADAPTERS" FontSize="10" FontWeight="Bold"
-                                           Foreground="{StaticResource TextSecondary}" Margin="0,0,0,8"/>
+                                           Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,8"/>
                                 <TextBlock x:Name="ActiveAdaptersText" Text="0 adapters" FontSize="14"
-                                           Foreground="{StaticResource TextPrimary}"/>
+                                           Foreground="{DynamicResource TextPrimary}"/>
                                 <TextBlock x:Name="TopAdapterText" FontSize="11"
-                                           Foreground="{StaticResource TextMuted}" Margin="0,4,0,0"/>
+                                           Foreground="{DynamicResource TextMuted}" Margin="0,4,0,0"/>
                             </StackPanel>
                         </Border>
-                        <Border Grid.Column="2" Style="{StaticResource Card}">
+                        <Border Grid.Column="2" Style="{DynamicResource Card}">
                             <StackPanel>
                                 <TextBlock Text="NETWORK PROCESSES" FontSize="10" FontWeight="Bold"
-                                           Foreground="{StaticResource TextSecondary}" Margin="0,0,0,8"/>
+                                           Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,8"/>
                                 <TextBlock x:Name="ActiveProcessesText" Text="0 processes" FontSize="14"
-                                           Foreground="{StaticResource TextPrimary}"/>
+                                           Foreground="{DynamicResource TextPrimary}"/>
                                 <TextBlock x:Name="TopProcessText" FontSize="11"
-                                           Foreground="{StaticResource TextMuted}" Margin="0,4,0,0"/>
+                                           Foreground="{DynamicResource TextMuted}" Margin="0,4,0,0"/>
                             </StackPanel>
                         </Border>
                     </Grid>
@@ -156,32 +157,32 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Margin="0,0,0,20">
                     <TextBlock Text="Live Monitor" FontSize="20" FontWeight="SemiBold"
-                               Foreground="{StaticResource TextPrimary}" Margin="0,0,0,4"/>
+                               Foreground="{DynamicResource TextPrimary}" Margin="0,0,0,4"/>
                     <TextBlock Text="Real-time speed chart updated every second"
-                               Foreground="{StaticResource TextSecondary}"/>
+                               Foreground="{DynamicResource TextSecondary}"/>
                 </StackPanel>
                 <Grid Grid.Row="1" Margin="0,0,0,16">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/><ColumnDefinition Width="8"/><ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Border Grid.Column="0" Style="{StaticResource Card}">
+                    <Border Grid.Column="0" Style="{DynamicResource Card}">
                         <StackPanel>
                             <TextBlock Text="↓ DOWNLOAD" FontSize="10" FontWeight="Bold"
-                                       Foreground="{StaticResource TextSecondary}" Margin="0,0,0,8"/>
+                                       Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,8"/>
                             <TextBlock x:Name="LiveDownloadText" Text="0 B/s" FontSize="28"
-                                       FontWeight="Bold" Foreground="{StaticResource AccentGreen}"/>
+                                       FontWeight="Bold" Foreground="{DynamicResource AccentGreen}"/>
                         </StackPanel>
                     </Border>
-                    <Border Grid.Column="2" Style="{StaticResource Card}">
+                    <Border Grid.Column="2" Style="{DynamicResource Card}">
                         <StackPanel>
                             <TextBlock Text="↑ UPLOAD" FontSize="10" FontWeight="Bold"
-                                       Foreground="{StaticResource TextSecondary}" Margin="0,0,0,8"/>
+                                       Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,8"/>
                             <TextBlock x:Name="LiveUploadText" Text="0 B/s" FontSize="28"
-                                       FontWeight="Bold" Foreground="{StaticResource AccentBlue}"/>
+                                       FontWeight="Bold" Foreground="{DynamicResource AccentBlue}"/>
                         </StackPanel>
                     </Border>
                 </Grid>
-                <Border Grid.Row="2" Style="{StaticResource Card}">
+                <Border Grid.Row="2" Style="{DynamicResource Card}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="48"/>
@@ -194,27 +195,27 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0" x:Name="ChartMaxLabel" Text="0" FontSize="10"
-                                       Foreground="{StaticResource TextMuted}" TextAlignment="Right" Margin="0,0,6,0"/>
+                                       Foreground="{DynamicResource TextMuted}" TextAlignment="Right" Margin="0,0,6,0"/>
                             <TextBlock Grid.Row="1" x:Name="ChartMidLabel" Text="0" FontSize="10"
-                                       Foreground="{StaticResource TextMuted}" TextAlignment="Right"
+                                       Foreground="{DynamicResource TextMuted}" TextAlignment="Right"
                                        VerticalAlignment="Center" Margin="0,0,6,0"/>
                             <TextBlock Grid.Row="2" Text="0" FontSize="10"
-                                       Foreground="{StaticResource TextMuted}" TextAlignment="Right" Margin="0,0,6,0"/>
+                                       Foreground="{DynamicResource TextMuted}" TextAlignment="Right" Margin="0,0,6,0"/>
                         </Grid>
                         <Canvas Grid.Column="1" x:Name="LiveChartCanvas" ClipToBounds="True"
                                 Background="Transparent" SizeChanged="ChartCanvas_SizeChanged">
-                            <Polygon x:Name="LiveDownloadFill" Fill="#1A3FB950" Stroke="Transparent"/>
-                            <Polygon x:Name="LiveUploadFill" Fill="#1A58A6FF" Stroke="Transparent"/>
-                            <Polyline x:Name="LiveDownloadLine" Stroke="{StaticResource AccentGreen}" StrokeThickness="2"/>
-                            <Polyline x:Name="LiveUploadLine" Stroke="{StaticResource AccentBlue}" StrokeThickness="2"/>
+                            <Polygon x:Name="LiveDownloadFill" Fill="{DynamicResource ChartDownloadFill}" Stroke="Transparent"/>
+                            <Polygon x:Name="LiveUploadFill" Fill="{DynamicResource ChartUploadFill}" Stroke="Transparent"/>
+                            <Polyline x:Name="LiveDownloadLine" Stroke="{DynamicResource AccentGreen}" StrokeThickness="2"/>
+                            <Polyline x:Name="LiveUploadLine" Stroke="{DynamicResource AccentBlue}" StrokeThickness="2"/>
                         </Canvas>
                     </Grid>
                 </Border>
                 <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,8,0,0">
-                    <Border Width="16" Height="3" Background="{StaticResource AccentGreen}" CornerRadius="1" VerticalAlignment="Center"/>
-                    <TextBlock Text=" Download" FontSize="11" Foreground="{StaticResource TextMuted}" Margin="0,0,16,0"/>
-                    <Border Width="16" Height="3" Background="{StaticResource AccentBlue}" CornerRadius="1" VerticalAlignment="Center"/>
-                    <TextBlock Text=" Upload" FontSize="11" Foreground="{StaticResource TextMuted}"/>
+                    <Border Width="16" Height="3" Background="{DynamicResource AccentGreen}" CornerRadius="1" VerticalAlignment="Center"/>
+                    <TextBlock Text=" Download" FontSize="11" Foreground="{DynamicResource TextMuted}" Margin="0,0,16,0"/>
+                    <Border Width="16" Height="3" Background="{DynamicResource AccentBlue}" CornerRadius="1" VerticalAlignment="Center"/>
+                    <TextBlock Text=" Upload" FontSize="11" Foreground="{DynamicResource TextMuted}"/>
                 </StackPanel>
             </Grid>
 
@@ -226,16 +227,16 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Margin="0,0,0,16">
                     <TextBlock Text="Adapters" FontSize="20" FontWeight="SemiBold"
-                               Foreground="{StaticResource TextPrimary}" Margin="0,0,0,4"/>
+                               Foreground="{DynamicResource TextPrimary}" Margin="0,0,0,4"/>
                     <TextBlock Text="Active and recently used network connections"
-                               Foreground="{StaticResource TextSecondary}"/>
+                               Foreground="{DynamicResource TextSecondary}"/>
                 </StackPanel>
                 <ListView Grid.Row="1" x:Name="AdapterListView"
-                           Background="{StaticResource BgSecondary}"
-                           BorderBrush="{StaticResource BorderDefault}" BorderThickness="1"
-                           ItemContainerStyle="{StaticResource DarkListViewItem}">
+                           Background="{DynamicResource BgSecondary}"
+                           BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1"
+                           ItemContainerStyle="{DynamicResource DarkListViewItem}">
                     <ListView.View>
-                        <GridView ColumnHeaderContainerStyle="{StaticResource DarkColumnHeader}">
+                        <GridView ColumnHeaderContainerStyle="{DynamicResource DarkColumnHeader}">
                             <GridViewColumn Header="Adapter" Width="180" DisplayMemberBinding="{Binding Name}"/>
                             <GridViewColumn Header="Type" Width="80" DisplayMemberBinding="{Binding Type}"/>
                             <GridViewColumn Header="↓ Live" Width="100" DisplayMemberBinding="{Binding LiveDownloaded}"/>
@@ -255,16 +256,16 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Margin="0,0,0,16">
                     <TextBlock Text="Applications" FontSize="20" FontWeight="SemiBold"
-                               Foreground="{StaticResource TextPrimary}" Margin="0,0,0,4"/>
+                               Foreground="{DynamicResource TextPrimary}" Margin="0,0,0,4"/>
                     <TextBlock Text="Processes with active network connections (updated every 5s)"
-                               Foreground="{StaticResource TextSecondary}"/>
+                               Foreground="{DynamicResource TextSecondary}"/>
                 </StackPanel>
                 <ListView Grid.Row="1" x:Name="ProcessListView"
-                           Background="{StaticResource BgSecondary}"
-                           BorderBrush="{StaticResource BorderDefault}" BorderThickness="1"
-                           ItemContainerStyle="{StaticResource DarkListViewItem}">
+                           Background="{DynamicResource BgSecondary}"
+                           BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1"
+                           ItemContainerStyle="{DynamicResource DarkListViewItem}">
                     <ListView.View>
-                        <GridView ColumnHeaderContainerStyle="{StaticResource DarkColumnHeader}">
+                        <GridView ColumnHeaderContainerStyle="{DynamicResource DarkColumnHeader}">
                             <GridViewColumn Header="Process" Width="180" DisplayMemberBinding="{Binding ProcessName}"/>
                             <GridViewColumn Header="Connections" Width="100" DisplayMemberBinding="{Binding ConnectionCount}"/>
                             <GridViewColumn Header="Path" Width="380" DisplayMemberBinding="{Binding ProcessPath}"/>
@@ -282,26 +283,26 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Margin="0,0,0,16">
                     <TextBlock Text="History" FontSize="20" FontWeight="SemiBold"
-                               Foreground="{StaticResource TextPrimary}" Margin="0,0,0,4"/>
+                               Foreground="{DynamicResource TextPrimary}" Margin="0,0,0,4"/>
                     <TextBlock Text="Daily network usage over time"
-                               Foreground="{StaticResource TextSecondary}"/>
+                               Foreground="{DynamicResource TextSecondary}"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12">
                     <RadioButton Content="7 Days" GroupName="HistFilter" Tag="7" IsChecked="True"
-                                 Style="{StaticResource FilterRadio}" Checked="HistoryFilter_Changed"/>
+                                 Style="{DynamicResource FilterRadio}" Checked="HistoryFilter_Changed"/>
                     <RadioButton Content="30 Days" GroupName="HistFilter" Tag="30"
-                                 Style="{StaticResource FilterRadio}" Checked="HistoryFilter_Changed"/>
+                                 Style="{DynamicResource FilterRadio}" Checked="HistoryFilter_Changed"/>
                     <RadioButton Content="90 Days" GroupName="HistFilter" Tag="90"
-                                 Style="{StaticResource FilterRadio}" Checked="HistoryFilter_Changed"/>
+                                 Style="{DynamicResource FilterRadio}" Checked="HistoryFilter_Changed"/>
                     <RadioButton Content="All" GroupName="HistFilter" Tag="9999"
-                                 Style="{StaticResource FilterRadio}" Checked="HistoryFilter_Changed"/>
+                                 Style="{DynamicResource FilterRadio}" Checked="HistoryFilter_Changed"/>
                 </StackPanel>
                 <ListView Grid.Row="2" x:Name="HistoryListView"
-                           Background="{StaticResource BgSecondary}"
-                           BorderBrush="{StaticResource BorderDefault}" BorderThickness="1"
-                           ItemContainerStyle="{StaticResource DarkListViewItem}">
+                           Background="{DynamicResource BgSecondary}"
+                           BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1"
+                           ItemContainerStyle="{DynamicResource DarkListViewItem}">
                     <ListView.View>
-                        <GridView ColumnHeaderContainerStyle="{StaticResource DarkColumnHeader}">
+                        <GridView ColumnHeaderContainerStyle="{DynamicResource DarkColumnHeader}">
                             <GridViewColumn Header="Date" Width="160" DisplayMemberBinding="{Binding Date}"/>
                             <GridViewColumn Header="Downloaded" Width="160" DisplayMemberBinding="{Binding Downloaded}"/>
                             <GridViewColumn Header="Uploaded" Width="160" DisplayMemberBinding="{Binding Uploaded}"/>
@@ -314,14 +315,14 @@
             <ScrollViewer x:Name="AlertsPage" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="24">
                     <TextBlock Text="Alerts" FontSize="20" FontWeight="SemiBold"
-                               Foreground="{StaticResource TextPrimary}" Margin="0,0,0,4"/>
+                               Foreground="{DynamicResource TextPrimary}" Margin="0,0,0,4"/>
                     <TextBlock Text="Configure threshold alerts for network usage"
-                               Foreground="{StaticResource TextSecondary}" Margin="0,0,0,20"/>
+                               Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,20"/>
 
-                    <Border Style="{StaticResource Card}" Margin="0,0,0,16">
+                    <Border Style="{DynamicResource Card}" Margin="0,0,0,16">
                         <StackPanel>
                             <TextBlock Text="ADD RULE" FontSize="10" FontWeight="Bold"
-                                       Foreground="{StaticResource TextSecondary}" Margin="0,0,0,12"/>
+                                       Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,12"/>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -333,10 +334,10 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBox x:Name="AlertRuleNameInput" Grid.Column="0"
-                                         Background="{StaticResource BgTertiary}"
-                                         Foreground="{StaticResource TextPrimary}"
-                                         BorderBrush="{StaticResource BorderDefault}"
-                                         CaretBrush="{StaticResource TextPrimary}"
+                                         Background="{DynamicResource BgTertiary}"
+                                         Foreground="{DynamicResource TextPrimary}"
+                                         BorderBrush="{DynamicResource BorderDefault}"
+                                         CaretBrush="{DynamicResource TextPrimary}"
                                          Padding="8,6" VerticalContentAlignment="Center"/>
                                 <ComboBox x:Name="AlertRuleTypeCombo" Grid.Column="2" SelectedIndex="0">
                                     <ComboBoxItem Content="Daily Down" Tag="daily-download"/>
@@ -346,27 +347,27 @@
                                     <ComboBoxItem Content="Speed Up" Tag="speed-upload"/>
                                 </ComboBox>
                                 <TextBox x:Name="AlertThresholdInput" Grid.Column="4"
-                                         Background="{StaticResource BgTertiary}"
-                                         Foreground="{StaticResource TextPrimary}"
-                                         BorderBrush="{StaticResource BorderDefault}"
-                                         CaretBrush="{StaticResource TextPrimary}"
+                                         Background="{DynamicResource BgTertiary}"
+                                         Foreground="{DynamicResource TextPrimary}"
+                                         BorderBrush="{DynamicResource BorderDefault}"
+                                         CaretBrush="{DynamicResource TextPrimary}"
                                          Padding="8,6" VerticalContentAlignment="Center"/>
                                 <Button Grid.Column="6" Content="Add"
-                                        Style="{StaticResource AccentButton}"
+                                        Style="{DynamicResource AccentButton}"
                                         Click="AddAlert_Click" Padding="16,6"/>
                             </Grid>
                             <TextBlock Text="Threshold is in MB. E.g. 1024 = 1 GB." FontSize="11"
-                                       Foreground="{StaticResource TextMuted}" Margin="0,8,0,0"/>
+                                       Foreground="{DynamicResource TextMuted}" Margin="0,8,0,0"/>
                         </StackPanel>
                     </Border>
 
                     <TextBlock Text="ACTIVE RULES" FontSize="10" FontWeight="Bold"
-                               Foreground="{StaticResource TextSecondary}" Margin="0,0,0,8"/>
+                               Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,8"/>
                     <ItemsControl x:Name="AlertRulesPanel">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border Background="{StaticResource BgSecondary}"
-                                        BorderBrush="{StaticResource BorderDefault}"
+                                <Border Background="{DynamicResource BgSecondary}"
+                                        BorderBrush="{DynamicResource BorderDefault}"
                                         BorderThickness="1" CornerRadius="6"
                                         Padding="12,8" Margin="0,0,0,4">
                                     <Grid>
@@ -377,18 +378,18 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding RuleName}" Foreground="{StaticResource TextPrimary}"
+                                            <TextBlock Text="{Binding RuleName}" Foreground="{DynamicResource TextPrimary}"
                                                        FontSize="13" Margin="0,0,12,0"/>
-                                            <TextBlock Text="{Binding TypeLabel}" Foreground="{StaticResource TextMuted}" FontSize="11"/>
+                                            <TextBlock Text="{Binding TypeLabel}" Foreground="{DynamicResource TextMuted}" FontSize="11"/>
                                         </StackPanel>
                                         <TextBlock Grid.Column="1" Text="{Binding ThresholdLabel}"
-                                                   Foreground="{StaticResource AccentOrange}"
+                                                   Foreground="{DynamicResource AccentOrange}"
                                                    FontSize="12" VerticalAlignment="Center" Margin="8,0"/>
                                         <CheckBox Grid.Column="2" IsChecked="{Binding Enabled}"
                                                   VerticalAlignment="Center" Margin="8,0"
                                                   Checked="AlertToggle_Changed" Unchecked="AlertToggle_Changed"/>
                                         <Button Grid.Column="3" Content="✕"
-                                                Style="{StaticResource ModernButton}"
+                                                Style="{DynamicResource ModernButton}"
                                                 Padding="6,2" FontSize="10"
                                                 Click="DeleteAlert_Click" Tag="{Binding RuleId}"/>
                                     </Grid>
@@ -398,14 +399,14 @@
                     </ItemsControl>
 
                     <TextBlock Text="RECENT ALERTS" FontSize="10" FontWeight="Bold"
-                               Foreground="{StaticResource TextSecondary}" Margin="0,20,0,8"/>
+                               Foreground="{DynamicResource TextSecondary}" Margin="0,20,0,8"/>
                     <ListView x:Name="AlertHistoryListView"
-                              Background="{StaticResource BgSecondary}"
-                              BorderBrush="{StaticResource BorderDefault}" BorderThickness="1"
+                              Background="{DynamicResource BgSecondary}"
+                              BorderBrush="{DynamicResource BorderDefault}" BorderThickness="1"
                               MaxHeight="250"
-                              ItemContainerStyle="{StaticResource DarkListViewItem}">
+                              ItemContainerStyle="{DynamicResource DarkListViewItem}">
                         <ListView.View>
-                            <GridView ColumnHeaderContainerStyle="{StaticResource DarkColumnHeader}">
+                            <GridView ColumnHeaderContainerStyle="{DynamicResource DarkColumnHeader}">
                                 <GridViewColumn Header="Time" Width="160" DisplayMemberBinding="{Binding TriggeredLocal}"/>
                                 <GridViewColumn Header="Message" Width="400" DisplayMemberBinding="{Binding Message}"/>
                             </GridView>
@@ -418,16 +419,33 @@
             <ScrollViewer x:Name="SettingsPage" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="24">
                     <TextBlock Text="Settings" FontSize="20" FontWeight="SemiBold"
-                               Foreground="{StaticResource TextPrimary}" Margin="0,0,0,4"/>
+                               Foreground="{DynamicResource TextPrimary}" Margin="0,0,0,4"/>
                     <TextBlock Text="Configure widget, startup, and data management"
-                               Foreground="{StaticResource TextSecondary}" Margin="0,0,0,24"/>
+                               Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,24"/>
+
+                    <TextBlock Text="APPEARANCE" FontSize="10" FontWeight="Bold"
+                               Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,12"/>
+                    <Border Style="{DynamicResource Card}" Margin="0,0,0,8">
+                        <StackPanel>
+                            <TextBlock Text="Theme" FontSize="12"
+                                       Foreground="{DynamicResource TextPrimary}" Margin="0,0,0,6"/>
+                            <ComboBox x:Name="ThemeComboBox" Width="240" HorizontalAlignment="Left"
+                                      SelectionChanged="ThemeComboBox_SelectionChanged">
+                                <ComboBoxItem Content="Dark" Tag="dark"/>
+                                <ComboBoxItem Content="Light" Tag="light"/>
+                                <ComboBoxItem Content="System" Tag="system"/>
+                            </ComboBox>
+                            <TextBlock Text="'System' follows your Windows theme preference" FontSize="11"
+                                       Foreground="{DynamicResource TextMuted}" Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
 
                     <TextBlock Text="WIDGET" FontSize="10" FontWeight="Bold"
-                               Foreground="{StaticResource TextSecondary}" Margin="0,0,0,12"/>
-                    <Border Style="{StaticResource Card}" Margin="0,0,0,8">
+                               Foreground="{DynamicResource TextSecondary}" Margin="0,20,0,12"/>
+                    <Border Style="{DynamicResource Card}" Margin="0,0,0,8">
                         <StackPanel>
                             <TextBlock Text="Display Mode" FontSize="12"
-                                       Foreground="{StaticResource TextPrimary}" Margin="0,0,0,6"/>
+                                       Foreground="{DynamicResource TextPrimary}" Margin="0,0,0,6"/>
                             <ComboBox x:Name="WidgetModeComboBox" Width="240" HorizontalAlignment="Left"
                                       SelectionChanged="WidgetModeComboBox_SelectionChanged">
                                 <ComboBoxItem Content="Total traffic" Tag="total"/>
@@ -435,49 +453,49 @@
                                 <ComboBoxItem Content="Selected adapter" Tag="selected-adapter"/>
                             </ComboBox>
                             <TextBlock Text="Selected Adapter" FontSize="12"
-                                       Foreground="{StaticResource TextPrimary}" Margin="0,16,0,6"/>
+                                       Foreground="{DynamicResource TextPrimary}" Margin="0,16,0,6"/>
                             <ComboBox x:Name="WidgetAdapterComboBox" Width="300" HorizontalAlignment="Left"
                                       DisplayMemberPath="DisplayName" SelectedValuePath="Id"
                                       SelectionChanged="WidgetAdapterComboBox_SelectionChanged"/>
                             <TextBlock Text="Only used when mode is 'Selected adapter'" FontSize="11"
-                                       Foreground="{StaticResource TextMuted}" Margin="0,4,0,0"/>
+                                       Foreground="{DynamicResource TextMuted}" Margin="0,4,0,0"/>
                         </StackPanel>
                     </Border>
 
                     <TextBlock Text="STARTUP" FontSize="10" FontWeight="Bold"
-                               Foreground="{StaticResource TextSecondary}" Margin="0,20,0,12"/>
-                    <Border Style="{StaticResource Card}" Margin="0,0,0,8">
+                               Foreground="{DynamicResource TextSecondary}" Margin="0,20,0,12"/>
+                    <Border Style="{DynamicResource Card}" Margin="0,0,0,8">
                         <CheckBox x:Name="StartWithWindowsCheckBox" Content=" Start with Windows"
-                                  Foreground="{StaticResource TextPrimary}" FontSize="13"
+                                  Foreground="{DynamicResource TextPrimary}" FontSize="13"
                                   Checked="StartWithWindows_Changed" Unchecked="StartWithWindows_Changed"/>
                     </Border>
 
                     <TextBlock Text="DATA" FontSize="10" FontWeight="Bold"
-                               Foreground="{StaticResource TextSecondary}" Margin="0,20,0,12"/>
-                    <Border Style="{StaticResource Card}" Margin="0,0,0,8">
+                               Foreground="{DynamicResource TextSecondary}" Margin="0,20,0,12"/>
+                    <Border Style="{DynamicResource Card}" Margin="0,0,0,8">
                         <StackPanel>
                             <TextBlock Text="Export your usage data or clear all records" FontSize="12"
-                                       Foreground="{StaticResource TextSecondary}" Margin="0,0,0,12"/>
+                                       Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,12"/>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="Export CSV" Style="{StaticResource ModernButton}"
+                                <Button Content="Export CSV" Style="{DynamicResource ModernButton}"
                                         Click="ExportCsv_Click" Margin="0,0,8,0"/>
-                                <Button Content="Export JSON" Style="{StaticResource ModernButton}"
+                                <Button Content="Export JSON" Style="{DynamicResource ModernButton}"
                                         Click="ExportJson_Click" Margin="0,0,8,0"/>
-                                <Button Content="Clear All Data" Style="{StaticResource DangerButton}"
+                                <Button Content="Clear All Data" Style="{DynamicResource DangerButton}"
                                         Click="ClearData_Click"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>
 
                     <TextBlock Text="ABOUT" FontSize="10" FontWeight="Bold"
-                               Foreground="{StaticResource TextSecondary}" Margin="0,20,0,12"/>
-                    <Border Style="{StaticResource Card}">
+                               Foreground="{DynamicResource TextSecondary}" Margin="0,20,0,12"/>
+                    <Border Style="{DynamicResource Card}">
                         <StackPanel>
                             <TextBlock Text="NetPulse v1.0.0" FontSize="14" FontWeight="SemiBold"
-                                       Foreground="{StaticResource TextPrimary}"/>
+                                       Foreground="{DynamicResource TextPrimary}"/>
                             <TextBlock Text="A lightweight, real-time network speed monitor for Windows"
-                                       Foreground="{StaticResource TextSecondary}" Margin="0,4,0,0"/>
-                            <TextBlock Text="© 2026 Hardik Kanajariya" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0"/>
+                                       Foreground="{DynamicResource TextSecondary}" Margin="0,4,0,0"/>
+                            <TextBlock Text="© 2026 Hardik Kanajariya" Foreground="{DynamicResource TextMuted}" Margin="0,4,0,0"/>
                         </StackPanel>
                     </Border>
                 </StackPanel>

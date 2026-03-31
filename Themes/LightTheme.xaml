@@ -1,0 +1,43 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="BgPrimary" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="BgSecondary" Color="#F6F8FA"/>
+    <SolidColorBrush x:Key="BgTertiary" Color="#F0F2F5"/>
+    <SolidColorBrush x:Key="BgHover" Color="#E8EBF0"/>
+    <SolidColorBrush x:Key="BorderDefault" Color="#D0D7DE"/>
+    <SolidColorBrush x:Key="BorderMuted" Color="#E1E4E8"/>
+    <SolidColorBrush x:Key="TextPrimary" Color="#1F2328"/>
+    <SolidColorBrush x:Key="TextSecondary" Color="#656D76"/>
+    <SolidColorBrush x:Key="TextMuted" Color="#8C959F"/>
+    <SolidColorBrush x:Key="AccentGreen" Color="#1A7F37"/>
+    <SolidColorBrush x:Key="AccentBlue" Color="#0969DA"/>
+    <SolidColorBrush x:Key="AccentOrange" Color="#BF8700"/>
+    <SolidColorBrush x:Key="AccentRed" Color="#CF222E"/>
+    <SolidColorBrush x:Key="AccentPurple" Color="#8250DF"/>
+    <SolidColorBrush x:Key="AccentButtonBg" Color="#0969DA"/>
+    <SolidColorBrush x:Key="AccentButtonBorder" Color="#0550AE"/>
+    <SolidColorBrush x:Key="DangerButtonBg" Color="#FFEBE9"/>
+    <SolidColorBrush x:Key="ChartDownloadFill" Color="#1A1A7F37"/>
+    <SolidColorBrush x:Key="ChartUploadFill" Color="#1A0969DA"/>
+
+    <!-- Widget colors -->
+    <SolidColorBrush x:Key="WidgetBg" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="WidgetBorder" Color="#D0D7DE"/>
+    <SolidColorBrush x:Key="WidgetTitle" Color="#1F2328"/>
+    <SolidColorBrush x:Key="WidgetSubtext" Color="#656D76"/>
+    <SolidColorBrush x:Key="WidgetDownload" Color="#1A7F37"/>
+    <SolidColorBrush x:Key="WidgetUpload" Color="#0969DA"/>
+
+    <!-- System overrides -->
+    <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.WindowTextBrushKey}" Color="#1F2328"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#F6F8FA"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="#1F2328"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.ControlDarkBrushKey}" Color="#D0D7DE"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.GrayTextBrushKey}" Color="#656D76"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#0969DA"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#E8EBF0"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#1F2328"/>
+</ResourceDictionary>

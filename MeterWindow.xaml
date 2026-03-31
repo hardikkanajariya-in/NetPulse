@@ -9,10 +9,10 @@
         ShowInTaskbar="False"
         ShowActivated="False"
     Topmost="False"
-        Background="#161B22"
+        Background="{DynamicResource WidgetBg}"
         AllowsTransparency="False">
-    <Border Background="#161B22"
-            BorderBrush="#30363D"
+    <Border Background="{DynamicResource WidgetBg}"
+            BorderBrush="{DynamicResource WidgetBorder}"
             BorderThickness="1"
             CornerRadius="12"
             Padding="12"
@@ -25,13 +25,13 @@
 
             <DockPanel Grid.Row="0" LastChildFill="False" Margin="0,0,0,8">
                 <TextBlock Text="NetPulse"
-                           Foreground="#E6EDF3"
+                           Foreground="{DynamicResource WidgetTitle}"
                            FontSize="14"
                            FontWeight="SemiBold" />
                 <TextBlock DockPanel.Dock="Right"
                            x:Name="SourceText"
                            Text="Total traffic"
-                           Foreground="#8B949E"
+                           Foreground="{DynamicResource WidgetSubtext}"
                            FontSize="11"
                            VerticalAlignment="Center" />
             </DockPanel>
@@ -45,24 +45,24 @@
 
                 <StackPanel Grid.Column="0">
                     <TextBlock Text="DOWN"
-                               Foreground="#8B949E"
+                               Foreground="{DynamicResource WidgetSubtext}"
                                FontSize="10"
                                FontWeight="Bold" />
                     <TextBlock x:Name="DownloadSpeedText"
                                Text="0 B/s"
-                               Foreground="#3FB950"
+                               Foreground="{DynamicResource WidgetDownload}"
                                FontSize="18"
                                FontWeight="SemiBold" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="2">
                     <TextBlock Text="UP"
-                               Foreground="#8B949E"
+                               Foreground="{DynamicResource WidgetSubtext}"
                                FontSize="10"
                                FontWeight="Bold" />
                     <TextBlock x:Name="UploadSpeedText"
                                Text="0 B/s"
-                               Foreground="#58A6FF"
+                               Foreground="{DynamicResource WidgetUpload}"
                                FontSize="18"
                                FontWeight="SemiBold" />
                 </StackPanel>

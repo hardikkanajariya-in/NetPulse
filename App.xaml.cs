@@ -19,6 +19,7 @@ public partial class App : Application
     private StartupManager _startupManager = null!;
     private ProcessTracker _processTracker = null!;
     private AlertService _alertService = null!;
+    private ThemeManager _themeManager = null!;
     private TelemetryCoordinator _telemetryCoordinator = null!;
     private DispatcherTimer _timer = null!;
     private MainWindow? _dashboard;
@@ -39,6 +40,8 @@ public partial class App : Application
 
         _databaseService = new DatabaseService();
         _settingsService = new SettingsService(_databaseService);
+        _themeManager = new ThemeManager(_databaseService);
+        _themeManager.Initialize();
         _networkMonitor = new NetworkMonitor();
         _startupManager = new StartupManager();
         _processTracker = new ProcessTracker();
@@ -133,7 +136,7 @@ public partial class App : Application
     {
         if (_dashboard == null || !_dashboard.IsLoaded)
         {
-            _dashboard = new MainWindow(_databaseService, _settingsService, _startupManager, _alertService);
+            _dashboard = new MainWindow(_databaseService, _settingsService, _startupManager, _alertService, _themeManager);
             MainWindow = _dashboard;
         }
 

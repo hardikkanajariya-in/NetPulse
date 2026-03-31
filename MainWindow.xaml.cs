@@ -15,6 +15,7 @@ public partial class MainWindow : Window
     private readonly SettingsService _settings;
     private readonly StartupManager _startupManager;
     private readonly AlertService _alertService;
+    private readonly ThemeManager _themeManager;
     private TelemetrySnapshot _currentSnapshot = TelemetrySnapshot.Empty;
 
     private readonly long[] _dlHistory = new long[60];
@@ -29,13 +30,15 @@ public partial class MainWindow : Window
     public bool AllowClose { get; set; }
 
     public MainWindow(DatabaseService db, SettingsService settings,
-                      StartupManager startupManager, AlertService alertService)
+                      StartupManager startupManager, AlertService alertService,
+                      ThemeManager themeManager)
     {
         InitializeComponent();
         _db = db;
         _settings = settings;
         _startupManager = startupManager;
         _alertService = alertService;
+        _themeManager = themeManager;
     }
 
     protected override void OnActivated(EventArgs e)
@@ -347,6 +350,13 @@ public partial class MainWindow : Window
         }
         WidgetAdapterComboBox.SelectedValue = _settings.SelectedAdapterId;
         StartWithWindowsCheckBox.IsChecked = _startupManager.IsEnabled;
+
+        foreach (var item in ThemeComboBox.Items.OfType<ComboBoxItem>())
+        {
+            if (string.Equals(item.Tag?.ToString(), _themeManager.CurrentTheme, StringComparison.OrdinalIgnoreCase))
+            { ThemeComboBox.SelectedItem = item; break; }
+        }
+
         _loadingSettings = false;
         ApplyWidgetSettingsState();
     }
@@ -390,6 +400,13 @@ public partial class MainWindow : Window
     {
         if (WidgetAdapterComboBox != null)
             WidgetAdapterComboBox.IsEnabled = _settings.WidgetMode == SettingsService.WidgetModeSelectedAdapter;
+    }
+
+    private void ThemeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (_loadingSettings) return;
+        if (ThemeComboBox.SelectedItem is ComboBoxItem item)
+            _themeManager.SetTheme(item.Tag?.ToString() ?? "dark");
     }
 
     private void StartWithWindows_Changed(object sender, RoutedEventArgs e)
