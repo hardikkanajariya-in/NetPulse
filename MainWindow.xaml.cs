@@ -23,6 +23,9 @@ public partial class MainWindow : Window
     private int _chartIdx;
     private int _chartCount;
 
+    private long _peakDownload;
+    private long _peakUpload;
+
     private string _currentPage = "Overview";
     private bool _loadingSettings;
     private int _historyDays = 7;
@@ -105,6 +108,10 @@ public partial class MainWindow : Window
                 UpdateLiveChart();
                 LiveDownloadText.Text = SpeedFormatter.Format(snapshot.DownloadSpeed);
                 LiveUploadText.Text = SpeedFormatter.Format(snapshot.UploadSpeed);
+                if (snapshot.DownloadSpeed > _peakDownload) _peakDownload = snapshot.DownloadSpeed;
+                if (snapshot.UploadSpeed > _peakUpload) _peakUpload = snapshot.UploadSpeed;
+                LivePeakDownText.Text = SpeedFormatter.Format(_peakDownload);
+                LivePeakUpText.Text = SpeedFormatter.Format(_peakUpload);
                 break;
             case "Adapters":
                 RefreshAdapters();

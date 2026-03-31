@@ -163,13 +163,16 @@
                 </StackPanel>
                 <Grid Grid.Row="1" Margin="0,0,0,16">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/><ColumnDefinition Width="8"/><ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/><ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="*"/><ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="*"/><ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0" Style="{DynamicResource Card}">
                         <StackPanel>
                             <TextBlock Text="↓ DOWNLOAD" FontSize="10" FontWeight="Bold"
                                        Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,8"/>
-                            <TextBlock x:Name="LiveDownloadText" Text="0 B/s" FontSize="28"
+                            <TextBlock x:Name="LiveDownloadText" Text="0 B/s" FontSize="24"
                                        FontWeight="Bold" Foreground="{DynamicResource AccentGreen}"/>
                         </StackPanel>
                     </Border>
@@ -177,8 +180,24 @@
                         <StackPanel>
                             <TextBlock Text="↑ UPLOAD" FontSize="10" FontWeight="Bold"
                                        Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,8"/>
-                            <TextBlock x:Name="LiveUploadText" Text="0 B/s" FontSize="28"
+                            <TextBlock x:Name="LiveUploadText" Text="0 B/s" FontSize="24"
                                        FontWeight="Bold" Foreground="{DynamicResource AccentBlue}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="4" Style="{DynamicResource Card}">
+                        <StackPanel>
+                            <TextBlock Text="↓ PEAK" FontSize="10" FontWeight="Bold"
+                                       Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,8"/>
+                            <TextBlock x:Name="LivePeakDownText" Text="0 B/s" FontSize="18"
+                                       FontWeight="SemiBold" Foreground="{DynamicResource AccentGreen}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="6" Style="{DynamicResource Card}">
+                        <StackPanel>
+                            <TextBlock Text="↑ PEAK" FontSize="10" FontWeight="Bold"
+                                       Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,8"/>
+                            <TextBlock x:Name="LivePeakUpText" Text="0 B/s" FontSize="18"
+                                       FontWeight="SemiBold" Foreground="{DynamicResource AccentBlue}"/>
                         </StackPanel>
                     </Border>
                 </Grid>
